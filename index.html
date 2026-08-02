@@ -300,7 +300,7 @@ function retryGuestConnect(code){if(online.closing||online.connected)return;onli
 function fallbackCopy(input){input.focus();input.select();try{document.execCommand('copy')}catch(_){}input.setSelectionRange(0,0)}
 async function copyText(text,input){try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);else fallbackCopy(input);setOnlineStatus('Copied — send it to your friend','live')}catch(_){fallbackCopy(input);setOnlineStatus('Selected for copying — use your phone Copy command','wait')}}
 function inviteMessageText(){return 'Play Bouncing Pong Heads with me! Tap this link to jump straight into a match: '}
-function shareViaMessenger(){if(!online.inviteUrl)return;window.open('fb-messenger://share/?link='+encodeURIComponent(online.inviteUrl),'_blank','noopener')}
+function shareViaMessenger(){if(!online.inviteUrl)return;const link=encodeURIComponent(online.inviteUrl);location.href=`intent://share/?link=${link}#Intent;scheme=fb-messenger;package=com.facebook.orca;S.browser_fallback_url=${link};end`}
 function shareViaEmail(){if(!online.inviteUrl)return;const subject=encodeURIComponent('Play Bouncing Pong Heads with me!');const body=encodeURIComponent(inviteMessageText()+online.inviteUrl);window.open(`mailto:?subject=${subject}&body=${body}`,'_blank','noopener')}
 function shareViaText(){if(!online.inviteUrl)return;const body=encodeURIComponent(inviteMessageText()+online.inviteUrl);window.open(`sms:?body=${body}`,'_blank','noopener')}
 function hostStartOnline(){if(!isOnlineHost()||!online.connected){setOnlineStatus('Wait until your friend connects.','wait');return}sendOnline({type:'start',arena:$('levelSelect').value,target:Number($('targetSelect').value)});online.winner=-1;startMatch()}
