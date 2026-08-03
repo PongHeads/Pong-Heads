@@ -1,5 +1,5 @@
 // Cache name bumped every release so stale builds cannot survive an update. (build C4)
-const CACHE = 'bph-D7';
+const CACHE = 'bph-D8';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
